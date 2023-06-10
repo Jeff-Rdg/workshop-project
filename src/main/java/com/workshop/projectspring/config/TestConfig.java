@@ -1,14 +1,8 @@
 package com.workshop.projectspring.config;
 
-import com.workshop.projectspring.entities.Category;
-import com.workshop.projectspring.entities.Order;
-import com.workshop.projectspring.entities.Product;
-import com.workshop.projectspring.entities.User;
+import com.workshop.projectspring.entities.*;
 import com.workshop.projectspring.entities.enums.OrderStatus;
-import com.workshop.projectspring.repository.ICategoryRepository;
-import com.workshop.projectspring.repository.IOrderRepository;
-import com.workshop.projectspring.repository.IProductRepository;
-import com.workshop.projectspring.repository.IUserRepository;
+import com.workshop.projectspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -29,11 +23,15 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private IProductRepository productRepository;
 
-    public TestConfig(IUserRepository userRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, IProductRepository productRepository) {
+    @Autowired
+    private IOrderItemRepository orderItemRepository;
+
+    public TestConfig(IUserRepository userRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository, IProductRepository productRepository, IOrderItemRepository orderItemRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -66,5 +64,14 @@ public class TestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
     }
 }
