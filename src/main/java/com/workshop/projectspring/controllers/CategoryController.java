@@ -1,7 +1,6 @@
 package com.workshop.projectspring.controllers;
 
 import com.workshop.projectspring.entities.Category;
-import com.workshop.projectspring.entities.Order;
 import com.workshop.projectspring.services.interfaces.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +30,8 @@ public class CategoryController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Category> findById(@PathVariable Integer id) {
-        Category order = service.findById(id);
-        return ResponseEntity.ok().body(order);
+        Category category = service.findById(id);
+        return ResponseEntity.ok().body(category);
     }
 
 }
