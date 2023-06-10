@@ -1,8 +1,10 @@
 package com.workshop.projectspring.config;
 
+import com.workshop.projectspring.entities.Category;
 import com.workshop.projectspring.entities.Order;
 import com.workshop.projectspring.entities.User;
 import com.workshop.projectspring.entities.enums.OrderStatus;
+import com.workshop.projectspring.repository.ICategoryRepository;
 import com.workshop.projectspring.repository.IOrderRepository;
 import com.workshop.projectspring.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,15 @@ import java.util.Arrays;
 public class TestConfig implements CommandLineRunner {
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
     private IOrderRepository orderRepository;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
-    public TestConfig(IUserRepository userRepository, IOrderRepository orderRepository) {
+    public TestConfig(IUserRepository userRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -34,8 +40,11 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2, OrderStatus.PAID);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1, OrderStatus.WAITING_PAYMENT);
 
+        Category c1 = new Category(null, "Eletronics");
+
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        categoryRepository.save(c1);
     }
 }
