@@ -9,5 +9,6 @@ public interface IUserService {
     public List<User> findAll();
 
     public User findById(Integer id);
+    public User insert(User obj);
 
 }
